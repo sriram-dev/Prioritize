@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html ng-app="Prioritize">
+<head>
+    <title>Prioritize</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/main.css" />
+    
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"> </script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>	
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+
+   
+
+    <!-- Angular Files -->
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="controllers.js"></script>
+    <script type="text/javascript" src="services.js"></script>
+   <script type="text/javascript">
+		document.write('<base href="' + document.location + '" />');		
+    </script>	
+</head>
+<body ng-controller="MainController" class="container">
+   <div class="homepage">        
+        <h2> Add Dependency </h2>
+        <div class="dependency_bar">
+            <div id="dep_choose">
+                <input class="dep_choose_inner" type="text" ng-model="dep1" typeahead="elem for elem in deparr | filter:$viewValue | limitTo:8" class="form-control" style="width:200px" placeholder = "Type Item1">
+                <div class="arrow_box dep_choose_inner">
+                   <b> Required For </b>
+                </div>
+                <input type="text" class="dep_choose_inner dep2" ng-model="dep2" typeahead="elem for elem in deparr | filter:$viewValue | limitTo:8" class="form-control" style="width:200px" placeholder = "Type Item2">
+            </div>
+            <br/><br/><br/><br/><br/>
+            <button class="btn btn-primary dep_add_button" ng-click="AddDependency()"> Add Dependency </button>
+        </div>
+        <h2> Listing </h2>
+        <div class="dep_listing">
+            <div ng-repeat="dep in depGraph">
+                    <alert ng-repeat="subdep in dep.deps" class="deplist_item" close="closeAlert(dep.node, subdep)">
+                            <span class="deplist_item_each"> {{dep.node}} </span> ---> 
+                            <span class="deplist_item_each"> {{subdep}} </span>
+                    </alert>                    
+            </div>
+        </div>
+        <br/><br/>
+        <button class="btn btn-primary" ng-click="Order()"> Prioritize </button>
+        <h2> THE ORDER </h2>
+        <div ng-if ="containsCycle">
+            <alert class="alert alert-danger">
+                Cyclic Dependencies were Found with the input. The following is a Grouping Order!
+            </alert>
+            <ol>
+                <li ng-repeat = "item in SCC_components">
+                    (
+                    <span style=" text-indent: 5em;" ng-repeat = "i in item">
+                       {{depGraph[i].node}}
+                    </span>
+                    )
+                </li>
+            </ol>
+        </div>
+        <div ng-if="!containsCycle">
+            <ol>
+                <li ng-repeat = "item in TopSortReverseOrder">
+                     <span class="list_item"> {{ depGraph[item].node }} </b> </span>
+                </li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
