@@ -1,0 +1,109 @@
+<h2> Add Tests </h2>
+
+<table class="table">
+	<tr>
+		<td>
+			<label for="ipaddr">IP Address</label>
+			<button type="button" class="btn btn-default">            
+      			<i class="glyphicon glyphicon-question-sign"></i>
+    		</button>
+		</td>
+		<td>
+			<input type="text" id="ipaddr" class="form-control" placeholder="Enter IP Address" ng-model="ipaddress" />
+		</td>
+	</tr>
+	<tr>
+		<td><label for="setup">Setup: </label> </td>
+		<td>
+			<select ng-model="setup" id="setup">
+				<option ng-repeat="set in availableSetups" value="{{set}}">{{set}}</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="itr">Iterations</label>
+		</td>
+		<td>
+			<input type="text" id="itr" ng-model="ExistingItr" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<lable for="state"> Prerequisite </label>
+		</td>
+		<td>
+			<select ng-model="state" id="state">
+				<option ng-repeat="set in availableStates" value="{{$index}}">{{set}}</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td> 
+			<label for="customscript"> Custom Script </label>
+		</td>
+		<td>
+			<input type="text" id="customscript" class="form-control" placeholder="Custom Script" ng-model="CustomScript" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="choosefolder"> Choose Folder for Log file : </label>			
+		</td>
+		<td>
+			<input type="file" id="choosefolder" fileread="logfolder" class="form-control" nwdirectory />
+		</td>
+	</tr>
+	<tr>
+		<td> 
+			<label for="choosefilename"> Choose File name (will be saved in chosen path) : </label>
+		</td>
+		<td>
+			<input type="text" ng-model="logfile" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="chosenpath"> Full Chosen Path of Log file: </label>
+		</td>		
+		<td>
+			<span id="chosenpath">{{logfolder.path}}\{{logfile}}</label>
+		</td>
+	</tr>
+</table>
+<br/>
+<h3> Choose Command </h3>
+<hr/>
+<table class="table">
+	<tr>
+	<td><label for="command">Choose From Existing : </label> </td>
+	<td>
+	<select ng-model="chosenExistingCmd" id="command">
+		<option ng-repeat="cmd in availablecmds" value="{{cmd}}">{{cmd}}</option>
+	</select>
+	</td>
+	</tr>
+	<tr>	
+		<td>
+			<label for="ccmd">Typein a Custom Command: </label> 
+		</td>
+		<td> 
+			<input type="text" id="ccmd" class="form-control" placeholder="Custom Command" ng-model="customCommandString" />
+		</td>
+	</tr>	
+</table>
+<br/>
+<button class="btn-primary btn-lg" ng-click="AddExistingCommand()">Add Existing Command</button>
+<button class="btn-primary btn-lg" ng-click="AddCustomCommand()"> Add Custom Command </button>
+
+<br/><br/>
+
+<div id="selectedCommands" div class="alert alert-info alert-dismissable" ng-repeat="item in testlist">
+	<button type="button" class="close" data-dismiss="alert" ng-click="RemoveCommand($index)" aria-hidden="true">&times;</button>
+	<div class="list">
+		<h4> Name: {{item.name}} </h2>
+		<h4> Path: {{item.fullcmd}} </h4>
+	</div>
+</div>
+<br/><br/>
+<button class="btn-primary btn-lg" ng-click="RunCommand()"> Run </button>

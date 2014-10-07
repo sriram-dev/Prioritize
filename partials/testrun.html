@@ -1,0 +1,15 @@
+<h2> Running Tests </h2>
+
+<div id="testrun">
+<div id="progress">
+	<div ng-repeat="item in progress">
+		{{item}} <br/>
+	</div>
+</div>
+<br/><br/>
+<h3> Logs: </h3>
+<hr/>
+<textarea ng-model="log" class="form-control" style="overflow:scroll;width:600px;height:800px;background-color: #ADD8E6"></textarea>
+</div>
+<br/><br/>
+<button class="btn-primary btn-lg" ng-click="MoveToTestAdd()"> Run More Tests </button>
